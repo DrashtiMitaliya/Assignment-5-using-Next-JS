@@ -4,17 +4,26 @@ import Carousel from 'react-bootstrap/Carousel';
 import { RotatingLines } from 'react-loader-spinner';
 import { Card, CardBody, Stack, Heading, Text, Divider, Button, ButtonGroup, CardFooter } from '@chakra-ui/react';
 import Link from "next/link"
+import { useEffect ,useState } from 'react';
+import { useRouter } from 'next/router';
 
 
 
 
 const ProductDetails = ({ data }) => {
+    const router =useRouter()
 
     // const [data, setData] = useState([])
-
+    const [login] = useState()
+    useEffect(() => {
+        if ((JSON.parse(localStorage.getItem('isLogin')) === false) || (JSON.parse(localStorage.getItem('isLogin')) === null)) {
+            router.push('/')
+        }
+    }, [])
     return (
 
-        <div>
+       <>
+        {login && (<div>
             {data.images ?
                 /* The code that displays the products all details. */
                 <div className='container '>
@@ -100,7 +109,7 @@ const ProductDetails = ({ data }) => {
 
                 /> </div>
             }
-        </div>
+        </div>)}</>
 
 
     )

@@ -34,7 +34,6 @@ const ProductCard = () => {
     useEffect(() => {
         if ((JSON.parse(localStorage.getItem('isLogin')) === false) || (JSON.parse(localStorage.getItem('isLogin')) === null)) {
             router.push('/')
-
         }
     }, [])
 

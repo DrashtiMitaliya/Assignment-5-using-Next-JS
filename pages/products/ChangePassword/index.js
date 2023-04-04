@@ -2,13 +2,14 @@
 import React from 'react';
 import { Heading, Flex, useColorModeValue, Box, Stack, Button } from '@chakra-ui/react';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
-
+import { useEffect ,useState } from 'react';
+import { useRouter } from 'next/router';
 // import from files
 import { changePasswordValidations } from '../../../constants/Validation';
-import { useRouter } from 'next/router';
 import { ChangePassword } from '../../../utils/ChangePasswordAuth';
 
 const ChangePasswordPage = () => {
+    const [login] = useState(false)
     const router = useRouter()
     const initialValues = {
         password: '',
@@ -20,16 +21,22 @@ const ChangePasswordPage = () => {
             router.push('/products')
         }
     }
+    useEffect(() => {
+        if ((JSON.parse(localStorage.getItem('isLogin')) === false) || (JSON.parse(localStorage.getItem('isLogin')) === null)) {
+            router.push('/')
+        }
+    }, [])
 
     return (
-        <Formik
+       <>
+       {login && ( <Formik
             initialValues={initialValues}
             validationSchema={changePasswordValidations}
             onSubmit={onSubmit}
         >
             <Form >
                 <Flex
-                    minH={'80vh'}
+                    minH={'100vh'}
                     align={'center'}
                     justify={'center'}
                     bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -79,7 +86,7 @@ const ChangePasswordPage = () => {
                     </Stack>
                 </Flex>
             </Form>
-        </Formik>
+        </Formik>)}</>
 
     )
 }

@@ -8,14 +8,17 @@ import {
     Field,
     ErrorMessage,
 } from 'formik';
+import { useRouter } from 'next/router';
+
 // import from files
 import { updateProfileValidations } from '../../../constants/Validation';
 import { ProfileUpdate, ChangeProfile } from '../../../utils/ChangeProfile';
-import { useRouter } from 'next/router';
+
 
 const UpdateProfilePage = () => {
   
     const router = useRouter()
+    const [login] = useState()
     const [data] = useState(ChangeProfile())
 
     /* Setting the initial values of the form. */
@@ -31,7 +34,7 @@ const UpdateProfilePage = () => {
     //      profile with the new values
 
     const onSubmit = (values) => {
-        if( ProfileUpdate(values)){
+        if(ProfileUpdate(values)){
             router.push('/products')
         }
     }
@@ -43,8 +46,8 @@ const UpdateProfilePage = () => {
 
     return (
         // code of update profile page
-        
-           <Formik
+           <>
+           {login && <Formik
                 initialValues={initialValues}
                 validationSchema={updateProfileValidations}
                 onSubmit={onSubmit}
@@ -108,7 +111,8 @@ const UpdateProfilePage = () => {
                         </Stack>
                     </Flex>
                 </Form>
-            </Formik>
+            </Formik>}
+           </>
         
 
     )
